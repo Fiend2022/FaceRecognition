@@ -45,20 +45,26 @@ def checkPairCorrect(pair:tuple[str, str]):
     else:
         return False
 
-outputs, numOfTest = getDataOneWithMatch("VGG16OneWithAll.txt")
-errors = 0
-for i in outputs:
-    res = checkLabelCorrect(i)
-    if res == False:
-        errors += 1
 
-print("Number of errors: ", errors, "out of", numOfTest)
 
-outputs, numOfTest = getDataBestComp("VGG16BestComplience.txt")
-errors = 0
-for i in outputs:
-    res = checkPairCorrect(i)
-    if res == False:
-        errors += 1
 
-print("Number of errors: ", errors, "out of", numOfTest)
+class Eval:
+    def run(self, file1:str, file2:str):
+        outputs, numOfTest = getDataOneWithMatch(file1)
+        errors = 0
+        for i in outputs:
+            res = checkLabelCorrect(i)
+            if res == False:
+                errors += 1
+
+        print("Probability of errors: ", errors / numOfTest, errors, " ", numOfTest)
+
+        outputs, numOfTest = getDataBestComp(file2)
+        errors = 0
+        for i in outputs:
+            res = checkPairCorrect(i)
+            if res == False:
+                errors += 1
+
+        print("Probability of errors: ", errors / numOfTest, errors, " ", numOfTest)
+        return None
